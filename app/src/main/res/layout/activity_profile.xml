@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/app_gradient_color_background"
+        app:layout_constraintBottom_toTopOf="@+id/fl_user_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="USER PROFILE"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/fl_user_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.372" />
+
+    <FrameLayout
+        android:id="@+id/fl_user_image"
+        android:layout_width="@dimen/profile_user_image_size"
+        android:layout_height="@dimen/profile_user_image_size"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/firstnameprofile"
+        app:layout_constraintEnd_toEndOf="@+id/firstnameprofile"
+        app:layout_constraintStart_toStartOf="@+id/firstnameprofile"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
+        <ImageView
+            android:id="@+id/iv_user_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/profile_user_photo_margin"
+            android:background="@color/colorLightGrey"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_user_placeholder" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/user_image_background" />
+
+    </FrameLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/firstnameprofile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="326dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="32dp"
+        android:hint="First Name"
+        app:layout_constraintBottom_toTopOf="@+id/lastnameprofile"
+        app:layout_constraintEnd_toEndOf="@+id/lastnameprofile"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/lastnameprofile">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lastnameprofile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="326dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="32dp"
+        android:hint="Last Name"
+        app:layout_constraintBottom_toTopOf="@+id/emailprofile"
+        app:layout_constraintEnd_toEndOf="@+id/emailprofile"
+        app:layout_constraintStart_toStartOf="@+id/emailprofile">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailprofile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="326dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="32dp"
+        android:hint="Email Id"
+        app:layout_constraintBottom_toTopOf="@+id/mobilenoprofile"
+        app:layout_constraintEnd_toEndOf="@+id/mobilenoprofile"
+        app:layout_constraintStart_toStartOf="@+id/mobilenoprofile">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mobilenoprofile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="326dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="32dp"
+        android:hint="Mobile Number"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_radio_button_height"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/profile_male"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/profile_radio_button_marginStartEnd"
+            android:layout_weight="1"
+            android:background="@drawable/gender_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="Male"
+            android:textColor="@drawable/radio_colour_text_selector"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/profile_female"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/profile_radio_button_marginStartEnd"
+            android:layout_weight="1"
+            android:background="@drawable/gender_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Female"
+            android:textColor="@drawable/radio_colour_text_selector"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:text="SUBMIT"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
