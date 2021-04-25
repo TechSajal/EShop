@@ -19,13 +19,15 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.dialog_progress.*
 
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var mProgressDialog: Dialog
+    val currentuserid = FirebaseAuth.getInstance().currentUser!!.uid
+    val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -38,20 +40,7 @@ class RegisterActivity : AppCompatActivity() {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        fun showProgressDialog(text: String) {
-            mProgressDialog = Dialog(this)
-            /*Set the screen content from a layout resource.
-            The resource will be inflated, adding all top-level views to the screen.*/
-            mProgressDialog.setContentView(R.layout.dialog_progress)
-            mProgressDialog.tv_progress_text.text = text
-            mProgressDialog.setCancelable(false)
-            mProgressDialog.setCanceledOnTouchOutside(false)
-            //Start the dialog and display it on screen.
-            mProgressDialog.show()
-        }
-        fun hideProgressDialog() {
-            mProgressDialog.dismiss()
-        }
+
         val lastname = findViewById<TextInputLayout>(R.id.lastname)
         val emailid = findViewById<TextInputLayout>(R.id.emailid)
         val password = findViewById<TextInputLayout>(R.id.passwordregister)
@@ -99,8 +88,7 @@ class RegisterActivity : AppCompatActivity() {
                             snackbar.show()
                             if (user.profileCompleted==0){
                                 val intent = Intent(this,ProfileActivity::class.java)
-                                intent.putExtra(Constants.LoginDetails,user)
-                                 startActivity(intent)
+                                startActivity(intent)
                             }else{
                                 val intent = Intent(this,MainActivity::class.java)
                                 startActivity(intent)

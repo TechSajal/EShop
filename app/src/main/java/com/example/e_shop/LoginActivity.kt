@@ -68,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
                               val user =  User()
                               if (user.profileCompleted==0){
                                   val intent = Intent(this,ProfileActivity::class.java)
-                                  intent.putExtra(Constants.LoginDetails,user)
                                   startActivity(intent)
                               }else{
                                   val intent = Intent(this,MainActivity::class.java)
