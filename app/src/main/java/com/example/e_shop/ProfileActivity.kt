@@ -25,6 +25,10 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var filepath :Uri
     private val READ_STORAGE_PERMISSION_CODE =2
     lateinit var auth: FirebaseAuth
+    val MALE:String = "male"
+    val FEMALE:String = "female"
+    val MOBILE:String = "mobile"
+    val GENDER:String = "gender"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -59,9 +63,23 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        appCompatButton.setOnClickListener {
+            val userHashMap =HashMap<String, Any>()
+            val mobileNumber = phone.text.toString().trim{ it <= ' ' }
+            val gender = if (profile_male.isChecked){
+                MALE
+            } else {
+                FEMALE
+            }
 
-
+            if (mobileNumber.isNotEmpty()){
+                userHashMap[MOBILE] = mobileNumber.toLong()
+            }
+             userHashMap[GENDER] = gender
+            FirestoreClass().updateUserProfile(this,userHashMap)
         }
+
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
