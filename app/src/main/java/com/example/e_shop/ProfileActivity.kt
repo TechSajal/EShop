@@ -1,16 +1,19 @@
 package com.example.e_shop
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -18,6 +21,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
@@ -29,6 +33,8 @@ class ProfileActivity : AppCompatActivity() {
     val FEMALE:String = "female"
     val MOBILE:String = "mobile"
     val GENDER:String = "gender"
+    val UPDATEPROFILE:String ="profileCompleted"
+    val IMAGEURL:String = "image"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -64,19 +70,50 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         appCompatButton.setOnClickListener {
-            val userHashMap =HashMap<String, Any>()
-            val mobileNumber = phone.text.toString().trim{ it <= ' ' }
-            val gender = if (profile_male.isChecked){
+            val userHashMap = HashMap<String, Any>()
+                val gender = if (profile_male.isChecked) {
                 MALE
             } else {
                 FEMALE
             }
-
-            if (mobileNumber.isNotEmpty()){
-                userHashMap[MOBILE] = mobileNumber.toLong()
+            val mobileNumbera = mobilenoprofile.editText!!.text.toString().trim{ it <= ' ' }
+            if (mobileNumbera.isNotEmpty()) {
+                userHashMap[MOBILE] = mobileNumbera
             }
-             userHashMap[GENDER] = gender
-            FirestoreClass().updateUserProfile(this,userHashMap)
+            userHashMap[GENDER] = gender
+            FirestoreClass().updateUserProfile(this, userHashMap)
+
+            if (filepath != null) {
+                val pd = ProgressDialog(this)
+                pd.setTitle("Uploading Profile")
+                pd.show()
+                val imageref = FirebaseStorage.getInstance().reference.child("profile/profilepic.jpg")
+                imageref.putFile(filepath)
+                        .addOnSuccessListener { p0 ->
+                            pd.dismiss()
+                            val snackbar = Snackbar.make(it, "Profile Uploaded", Snackbar.LENGTH_LONG)
+                            val sbView: View = snackbar.view
+                            sbView.setBackgroundColor(resources.getColor(R.color.colorThemeOrange))
+                            snackbar.show()
+                            val image = imageref.downloadUrl.addOnSuccessListener { Task ->
+                                val url = Task.toString()
+                                userHashMap[IMAGEURL] = url
+                                FirestoreClass().updateUserProfile(this, userHashMap)
+                            }
+                            // val B:String = "b"
+                            userHashMap[UPDATEPROFILE] = 1
+                            FirestoreClass().updateUserProfile(this, userHashMap)
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                        .addOnProgressListener { p0 ->
+                            val progress: Double = (100.0 * p0.bytesTransferred) / p0.totalByteCount
+                            pd.setMessage("Uploaded ${progress.toInt()}%")
+                        }
+
+
+            }
+
         }
 
     }

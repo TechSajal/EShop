@@ -1,6 +1,5 @@
 package com.example.e_shop
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,15 +18,11 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var mProgressDialog: Dialog
-    val currentuserid = FirebaseAuth.getInstance().currentUser!!.uid
-    val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -40,7 +35,6 @@ class RegisterActivity : AppCompatActivity() {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-
         val lastname = findViewById<TextInputLayout>(R.id.lastname)
         val emailid = findViewById<TextInputLayout>(R.id.emailid)
         val password = findViewById<TextInputLayout>(R.id.passwordregister)
@@ -108,7 +102,5 @@ class RegisterActivity : AppCompatActivity() {
 
 
     }
-    fun registrationfailed() {
-        Toast.makeText(this,"Error While Registering the user",Toast.LENGTH_LONG).show()
-    }
+
 }

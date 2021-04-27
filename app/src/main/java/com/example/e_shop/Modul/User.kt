@@ -10,5 +10,6 @@ class User (
     val email: String = " ",
     val mobile: String = "",
     val gender: String = "",
+    val image: String = "",
     val profileCompleted:Int = 0
     )

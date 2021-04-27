@@ -16,8 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
@@ -64,19 +64,29 @@ class LoginActivity : AppCompatActivity() {
                       auth.signInWithEmailAndPassword(emailauth, passauth).addOnCompleteListener(this, OnCompleteListener { task ->
                           if(task.isSuccessful) {
                               Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
-                              val firebaseUser: FirebaseUser = task.result!!.user!!
-                              val user =  User()
-                              if (user.profileCompleted==0){
-                                  val intent = Intent(this,ProfileActivity::class.java)
-                                  startActivity(intent)
-                              }else{
-                                  val intent = Intent(this,MainActivity::class.java)
-                                  startActivity(intent)
-                              }
+//                              val firebaseUser: FirebaseUser = task.result!!.user!!
+//                              val user =  User()
+//                              if (user.profileCompleted==0){
+//                                  val intent = Intent(this,ProfileActivity::class.java)
+//                                  startActivity(intent)
+//                              }else{
+//                                  val intent = Intent(this,MainActivity::class.java)
+//                                  startActivity(intent)
+//                              }
+                              val currentuserid = FirebaseAuth.getInstance().currentUser!!.uid
+                              val db = FirebaseFirestore.getInstance()
+                             db.collection("users").document(currentuserid).get().addOnSuccessListener { document ->
+                                 val user = document.toObject(User::class.java)!!
+                                 userloggedinsuccess(user)
+
+                             }
+
+
                           }else {
                               Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
                           }
                       })
+
                   }
 
 
@@ -84,6 +94,17 @@ class LoginActivity : AppCompatActivity() {
               }
 
 
+
+    }
+    fun userloggedinsuccess( user: User){
+        if (user.profileCompleted==0){
+            val intent = Intent(this,ProfileActivity::class.java)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
+        finish()
     }
 
 
