@@ -1,4 +1,4 @@
-package com.example.e_shop
+package com.example.e_shop.ui.activity
 
 import android.app.Activity
 import android.util.Log

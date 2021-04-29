@@ -1,4 +1,4 @@
-package com.example.e_shop
+package com.example.e_shop.ui.activity
 
 import android.content.Intent
 import android.os.Build
@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.e_shop.Modul.User
+import com.example.e_shop.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -106,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
         }
         finish()
     }
+
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.e_shop
+package com.example.e_shop.ui.activity
 
 import android.content.Intent
 import android.os.Build
@@ -7,6 +7,7 @@ import android.os.Handler
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.e_shop.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed(
             {
-                val intent = Intent(this,LoginActivity::class.java)
+                val intent = Intent(this,DashboardActivity::class.java)
                startActivity(intent)
             },2500
         )

@@ -1,4 +1,4 @@
-package com.example.e_shop
+package com.example.e_shop.ui.activity
 
 import android.Manifest
 import android.app.ProgressDialog
@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.e_shop.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -43,23 +44,23 @@ class ProfileActivity : AppCompatActivity() {
         val currentuserid = FirebaseAuth.getInstance().currentUser!!.uid
         val db = FirebaseFirestore.getInstance()
         db.collection("users").document(currentuserid).addSnapshotListener(this, object : EventListener<DocumentSnapshot> {
-                override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                    if (value!!.exists()){
-                        firstnameprofile.isEnabled = false
-                        firstnameprofile.editText!!.setText(value.getString("firstname"))
+            override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+                if (value!!.exists()) {
+                    firstnameprofile.isEnabled = false
+                    firstnameprofile.editText!!.setText(value.getString("firstname"))
 
-                        lastnameprofile.isEnabled=false
-                        lastnameprofile.editText!!.setText(value.getString("lastname"))
+                    lastnameprofile.isEnabled = false
+                    lastnameprofile.editText!!.setText(value.getString("lastname"))
 
-                         emailprofile.isEnabled=false
-                        emailprofile.editText!!.setText(value.getString("email"))
-                    }
+                    emailprofile.isEnabled = false
+                    emailprofile.editText!!.setText(value.getString("email"))
                 }
-            })
+            }
+        })
         userphoto.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 val i = Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT)
-                startActivityForResult(Intent.createChooser(i,"Choose Picture"),111)
+                startActivityForResult(Intent.createChooser(i, "Choose Picture"), 111)
             }else{
                        ActivityCompat.requestPermissions(
                                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -69,21 +70,71 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+//        appCompatButton.setOnClickListener {
+//            val userHashMap = HashMap<String, Any>()
+//                val gender = if (profile_male.isChecked) {
+//                MALE-
+//            } else {
+//                FEMALE
+//            }
+//            val mobileNumbera = mobilenoprofile.editText!!.text.toString().trim{ it <= ' ' }
+//            if (mobileNumbera.isNotEmpty()) {
+//                userHashMap[MOBILE] = mobileNumbera
+//            }
+//            userHashMap[GENDER] = gender
+//            FirestoreClass().updateUserProfile(this, userHashMap)
+//
+//            if (filepath != null) {
+//                val pd = ProgressDialog(this)
+//                pd.setTitle("Uploading Profile")
+//                pd.show()
+//                val imageref = FirebaseStorage.getInstance().reference.child("profile/profilepic.jpg")
+//                imageref.putFile(filepath)
+//                        .addOnSuccessListener { p0 ->
+//                            pd.dismiss()
+//                            val snackbar = Snackbar.make(it, "Profile Uploaded", Snackbar.LENGTH_LONG)
+//                            val sbView: View = snackbar.view
+//                            sbView.setBackgroundColor(resources.getColor(R.color.colorThemeOrange))
+//                            snackbar.show()
+//                            val image = imageref.downloadUrl.addOnSuccessListener { Task ->
+//                                val url = Task.toString()
+//                                userHashMap[IMAGEURL] = url
+//                                FirestoreClass().updateUserProfile(this, userHashMap)
+//                            }
+//                            // val B:String = "b"
+//                            userHashMap[UPDATEPROFILE] = 1
+//                            FirestoreClass().updateUserProfile(this, userHashMap)
+//                            val intent = Intent(this, MainActivity::class.java)
+//                            startActivity(intent)
+//                        }
+//                        .addOnProgressListener { p0 ->
+//                            val progress: Double = (100.0 * p0.bytesTransferred) / p0.totalByteCount
+//                            pd.setMessage("Uploaded ${progress.toInt()}%")
+//                        }
+//
+//
+//            }
+//
+//        }
         appCompatButton.setOnClickListener {
-            val userHashMap = HashMap<String, Any>()
-                val gender = if (profile_male.isChecked) {
-                MALE
-            } else {
-                FEMALE
-            }
             val mobileNumbera = mobilenoprofile.editText!!.text.toString().trim{ it <= ' ' }
-            if (mobileNumbera.isNotEmpty()) {
-                userHashMap[MOBILE] = mobileNumbera
-            }
-            userHashMap[GENDER] = gender
-            FirestoreClass().updateUserProfile(this, userHashMap)
+            val drawble = iv_user_photo.drawable
 
-            if (filepath != null) {
+            if (  iv_user_photo.drawable == null||  mobileNumbera.isEmpty() || filepath==null ==true){
+                val snackbar = Snackbar.make(it, "Please Fill all the field", Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(resources.getColor(R.color.design_default_color_error))
+                snackbar.show()
+            }else{
+                val userHashMap = HashMap<String, Any>()
+                val gender = if (profile_male.isChecked) {
+                    MALE
+                } else {
+                    FEMALE
+                }
+                userHashMap[MOBILE] = mobileNumbera
+                userHashMap[GENDER] = gender
+                FirestoreClass().updateUserProfile(this, userHashMap)
                 val pd = ProgressDialog(this)
                 pd.setTitle("Uploading Profile")
                 pd.show()
@@ -100,7 +151,7 @@ class ProfileActivity : AppCompatActivity() {
                                 userHashMap[IMAGEURL] = url
                                 FirestoreClass().updateUserProfile(this, userHashMap)
                             }
-                            // val B:String = "b"
+
                             userHashMap[UPDATEPROFILE] = 1
                             FirestoreClass().updateUserProfile(this, userHashMap)
                             val intent = Intent(this, MainActivity::class.java)
@@ -111,9 +162,7 @@ class ProfileActivity : AppCompatActivity() {
                             pd.setMessage("Uploaded ${progress.toInt()}%")
                         }
 
-
             }
-
         }
 
     }
@@ -123,9 +172,9 @@ class ProfileActivity : AppCompatActivity() {
         if (requestCode == READ_STORAGE_PERMISSION_CODE){
             if (grantResults.isNotEmpty()&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 val i = Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT)
-                startActivityForResult(Intent.createChooser(i,"Choose Picture"),111)
+                startActivityForResult(Intent.createChooser(i, "Choose Picture"), 111)
             }else{
-                Toast.makeText(applicationContext,"Storage Permission Denied",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Storage Permission Denied", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -134,8 +183,12 @@ class ProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode ==111 && resultCode == RESULT_OK && data != null){
             filepath =data.data!!
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,filepath)
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
             iv_user_photo.setImageBitmap(bitmap)
+
         }
     }
+
+
+
 }
