@@ -116,7 +116,7 @@ class ProfileActivity : AppCompatActivity() {
 //            }
 //
 //        }
-        appCompatButton.setOnClickListener {
+        logout.setOnClickListener {
             val mobileNumbera = mobilenoprofile.editText!!.text.toString().trim{ it <= ' ' }
             val drawble = iv_user_photo.drawable
 
@@ -154,7 +154,7 @@ class ProfileActivity : AppCompatActivity() {
 
                             userHashMap[UPDATEPROFILE] = 1
                             FirestoreClass().updateUserProfile(this, userHashMap)
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, DashboardActivity::class.java)
                             startActivity(intent)
                         }
                         .addOnProgressListener { p0 ->

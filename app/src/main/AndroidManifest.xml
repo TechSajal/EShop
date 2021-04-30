@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EShop">
-        <activity android:name=".ui.activity.SettingsActivity"></activity>
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EShop.NoActionBar"/>
         <activity
             android:name=".ui.activity.DashboardActivity"
             android:label="E-Shop" />
