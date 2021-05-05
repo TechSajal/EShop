@@ -99,7 +99,6 @@
         android:fontFamily="@font/bungee_inline"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/user_image_setting"
-        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="@+id/user_image_setting"
         app:layout_constraintTop_toBottomOf="@+id/user_image_setting"
         tools:text="Sajal Kaushal" />
@@ -135,7 +134,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logout"
+        android:id="@+id/submitprofile"
         android:layout_width="250dp"
         android:layout_height="52dp"
         android:background="@drawable/button_background"

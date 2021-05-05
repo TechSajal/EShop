@@ -85,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                                 val intent = Intent(this,ProfileActivity::class.java)
                                 startActivity(intent)
                             }else{
-                                val intent = Intent(this,MainActivity::class.java)
+                                val intent = Intent(this,DashboardActivity::class.java)
                                 startActivity(intent)
                             }
                             finish()

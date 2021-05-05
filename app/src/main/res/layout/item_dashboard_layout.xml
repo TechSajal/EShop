@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <RelativeLayout
+    android:padding="1dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/item_dashboard_background"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:background="#E1E1E1"
+        android:layout_margin="10dp"
+        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:src="@drawable/img_splash_background"
+        android:scaleType="fitXY"
+        android:minHeight="150dp"
+        android:id="@+id/iv_dashboard_item_image"/>
+
+    <View
+        android:background="#E8E6E6"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:id="@+id/view_divider"
+        android:layout_below="@id/iv_dashboard_item_image"/>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#F3F3F3"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/ll_dashboard_item_details"
+        android:layout_below="@id/view_divider"
+        android:paddingBottom="5dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingStart="10dp">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tv_dashboard_item_title"
+        tools:text="Item Name"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="#545353"/>
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tv_dashboard_item_price"
+        tools:text="$100.00"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="#545353"
+        android:layout_marginTop="2dp"/>
+
+</LinearLayout>
+
+</RelativeLayout>

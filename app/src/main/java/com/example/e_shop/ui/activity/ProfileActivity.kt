@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.e_shop.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -27,12 +28,14 @@ import kotlinx.android.synthetic.main.activity_profile.*
 
 
 class ProfileActivity : AppCompatActivity() {
-    lateinit var filepath :Uri
+    private var filepath :Uri?  = null
     private val READ_STORAGE_PERMISSION_CODE =2
     lateinit var auth: FirebaseAuth
     val MALE:String = "male"
     val FEMALE:String = "female"
     val MOBILE:String = "mobile"
+    val FNAME:String = "firstname"
+    val LNAME:String = "lastname"
     val GENDER:String = "gender"
     val UPDATEPROFILE:String ="profileCompleted"
     val IMAGEURL:String = "image"
@@ -46,14 +49,14 @@ class ProfileActivity : AppCompatActivity() {
         db.collection("users").document(currentuserid).addSnapshotListener(this, object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
                 if (value!!.exists()) {
-                    firstnameprofile.isEnabled = false
-                    firstnameprofile.editText!!.setText(value.getString("firstname"))
+                        firstnameSetting.isEnabled = false
+                        firstnameSetting.editText!!.setText(value.getString("firstname"))
 
-                    lastnameprofile.isEnabled = false
-                    lastnameprofile.editText!!.setText(value.getString("lastname"))
+                        lastnameSetting.isEnabled = false
+                        lastnameSetting.editText!!.setText(value.getString("lastname"))
 
-                    emailprofile.isEnabled = false
-                    emailprofile.editText!!.setText(value.getString("email"))
+                        emailsetting.isEnabled = false
+                        emailsetting.editText!!.setText(value.getString("email"))
                 }
             }
         })
@@ -116,18 +119,18 @@ class ProfileActivity : AppCompatActivity() {
 //            }
 //
 //        }
-        logout.setOnClickListener {
-            val mobileNumbera = mobilenoprofile.editText!!.text.toString().trim{ it <= ' ' }
+        submitprofile.setOnClickListener {
+            val mobileNumbera = mobilenosetting.editText!!.text.toString().trim{ it <= ' ' }
             val drawble = iv_user_photo.drawable
 
-            if (  iv_user_photo.drawable == null||  mobileNumbera.isEmpty() || filepath==null ==true){
+            if (    mobileNumbera.isEmpty() || filepath == null){
                 val snackbar = Snackbar.make(it, "Please Fill all the field", Snackbar.LENGTH_LONG)
                 val sbView: View = snackbar.view
                 sbView.setBackgroundColor(resources.getColor(R.color.design_default_color_error))
                 snackbar.show()
             }else{
                 val userHashMap = HashMap<String, Any>()
-                val gender = if (profile_male.isChecked) {
+                val gender = if (profile_malese.isChecked) {
                     MALE
                 } else {
                     FEMALE
@@ -139,7 +142,7 @@ class ProfileActivity : AppCompatActivity() {
                 pd.setTitle("Uploading Profile")
                 pd.show()
                 val imageref = FirebaseStorage.getInstance().reference.child("profile/profilepic.jpg")
-                imageref.putFile(filepath)
+                imageref.putFile(filepath!!)
                         .addOnSuccessListener { p0 ->
                             pd.dismiss()
                             val snackbar = Snackbar.make(it, "Profile Uploaded", Snackbar.LENGTH_LONG)
@@ -184,10 +187,50 @@ class ProfileActivity : AppCompatActivity() {
         if (requestCode ==111 && resultCode == RESULT_OK && data != null){
             filepath =data.data!!
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
-            iv_user_photo.setImageBitmap(bitmap)
-
+           // iv_user_photosetting.setImageBitmap(bitmap)
+              Glide.with(this).load(bitmap).into(iv_user_photo)
         }
     }
+
+
+
+
+//     firstnameSetting.editText!!.setText(value.getString("firstname"))
+//                        lastnameSetting.editText!!.setText(value.getString("lastname"))
+//                        emailsetting.isEnabled = false
+//                        emailsetting.editText!!.setText(value.getString("email"))
+//                        phone.setText(value.getString("mobile"))
+//                        val saj = value.getString("image")
+//                        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
+//                        Glide.with(this@ProfileActivity).load(bitmap).into(iv_user_photosetting)
+//                        val firstname = firstnameSetting.editText!!.text.toString().trim{ it <= ' ' }
+//                        if (firstname != value.getString("firstname") && firstname.isNotEmpty()){
+//                            val userHashMap = HashMap<String, Any>()
+//                            userHashMap[FNAME] = firstname
+//                            FirestoreClass().updateUserProfile(this@ProfileActivity, userHashMap)
+//                        }
+//                        val lastname = lastnameSetting.editText!!.text.toString().trim{ it <= ' ' }
+//                        if (lastname != value.getString("lastname") && lastname.isNotEmpty()){
+//                            val userHashMap = HashMap<String, Any>()
+//                            userHashMap[LNAME] = lastname
+//                            FirestoreClass().updateUserProfile(this@ProfileActivity, userHashMap)
+//
+//                        }
+//                        val mobile = phone.text.toString().trim { it <=  ' ' }
+//                        if (mobile != value.getString("mobile") && mobile.isNotEmpty()){
+//                            val userHashMap = HashMap<String, Any>()
+//                            userHashMap[MOBILE] = mobile
+//                            FirestoreClass().updateUserProfile(this@ProfileActivity, userHashMap)
+//                        }
+//
+//                        val gender = if (profile_malese.isChecked) {
+//                            MALE
+//                        } else {
+//                            FEMALE
+//                        }
+//                        val userHashMap = HashMap<String, Any>()
+//                        userHashMap[GENDER] = gender
+//                        FirestoreClass().updateUserProfile(this@ProfileActivity, userHashMap)
 
 
 

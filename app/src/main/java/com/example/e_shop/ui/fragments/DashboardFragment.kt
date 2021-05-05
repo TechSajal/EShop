@@ -3,10 +3,14 @@ package com.example.e_shop.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.e_shop.Modul.Product
 import com.example.e_shop.R
+import com.example.e_shop.ui.activity.FirestoreClass
 import com.example.e_shop.ui.activity.SettingsActivity
+import com.example.e_shop.ui.adapters.MyDashBoardListAdapter
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
@@ -21,12 +25,27 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-      //  dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-
-            textView.text = "DASHBOARD"
         return root
+    }
+
+    fun successDashboardListFromFirestore(productList:ArrayList<Product>){
+        if (productList.size > 0) {
+            rv_dashboard_items.visibility = View.VISIBLE
+            tv_no_dashboard_found.visibility = View.GONE
+            rv_dashboard_items.layoutManager = GridLayoutManager(activity,2)
+            rv_dashboard_items.setHasFixedSize(true)
+            val adapterDashboardProducts = MyDashBoardListAdapter(requireActivity(),productList)
+            rv_dashboard_items.adapter = adapterDashboardProducts
+        } else {
+            rv_dashboard_items.visibility = View.GONE
+            tv_no_dashboard_found.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        FirestoreClass().getdashboardlist(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

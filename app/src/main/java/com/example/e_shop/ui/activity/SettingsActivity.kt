@@ -1,7 +1,9 @@
 package com.example.e_shop.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.bumptech.glide.Glide
 import com.example.e_shop.R
 import com.google.firebase.auth.FirebaseAuth
@@ -30,5 +32,19 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val logout = findViewById<AppCompatButton>(R.id.submitprofile)
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or  Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+        val edit = findViewById<AppCompatButton>(R.id.edit)
+        edit.setOnClickListener {
+            val intent = Intent(this,EditCompletedActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

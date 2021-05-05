@@ -4,6 +4,7 @@
       <w>confirmpassword</w>
       <w>emailid</w>
       <w>firstname</w>
+      <w>lastname</w>
       <w>snackbar</w>
     </words>
   </dictionary>
