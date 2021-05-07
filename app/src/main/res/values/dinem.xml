@@ -10,4 +10,10 @@
     <dimen name="profile_radio_button_marginStartEnd">3dp</dimen>
     <dimen name="gender_radio_button_radius">5dp</dimen>
     <dimen name="gender_radio_button_stroke_width">1dp</dimen>
+    <!--START-->
+    <dimen name="rv_cart_items_marginTop">16dp</dimen>
+
+    <dimen name="ll_checkout_padding">16dp</dimen>
+
+    <dimen name="checkout_label_value_textSize">18sp</dimen>
 </resources>

@@ -8,4 +8,5 @@ package com.example.e_shop.Modul
          val description: String = "",
          val image:String = "",
          var id:String = "",
+         val quantity:String = "",
          )

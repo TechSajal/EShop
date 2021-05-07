@@ -12,9 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EShop">
-        <activity android:name=".ui.activity.AddProductActivity"
+        <activity android:name=".ui.activity.CartListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EShop.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.Product_Details_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EShop.NoActionBar" />
+        <activity
+            android:name=".ui.activity.AddProductActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EShop.NoActionBar" />
         <activity android:name=".ui.activity.EditCompletedActivity" />
         <activity
             android:name=".ui.activity.SettingsActivity"

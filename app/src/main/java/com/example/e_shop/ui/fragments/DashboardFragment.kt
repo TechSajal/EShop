@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.e_shop.Modul.Product
 import com.example.e_shop.R
+import com.example.e_shop.ui.activity.CartListActivity
 import com.example.e_shop.ui.activity.FirestoreClass
 import com.example.e_shop.ui.activity.SettingsActivity
 import com.example.e_shop.ui.adapters.MyDashBoardListAdapter
@@ -61,6 +62,13 @@ class DashboardFragment : Fragment() {
                 startActivity(intent)
                 return true
             }
+
+            R.id.action_cart ->{
+                val intent = Intent(activity, CartListActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }

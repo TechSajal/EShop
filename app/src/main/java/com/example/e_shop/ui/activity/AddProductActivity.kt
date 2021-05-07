@@ -51,7 +51,7 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         submitproduct.setOnClickListener {
-            if (filepath == null || TextUtils.isEmpty(producttytle.editText!!.text.toString()) || TextUtils.isEmpty(productdiscription.editText!!.text.toString()) || TextUtils.isEmpty(productprice.editText!!.text.toString()) ){
+            if (filepath == null || TextUtils.isEmpty(producttytle.editText!!.text.toString()) || TextUtils.isEmpty(productquantity.editText!!.text.toString()) ||TextUtils.isEmpty(productdiscription.editText!!.text.toString()) || TextUtils.isEmpty(productprice.editText!!.text.toString()) ){
                 val snackbar = Snackbar.make(it, "Please Fill all the field", Snackbar.LENGTH_LONG)
                 val sbView: View = snackbar.view
                 sbView.setBackgroundColor(resources.getColor(R.color.design_default_color_error))
@@ -86,6 +86,8 @@ class AddProductActivity : AppCompatActivity() {
                                                 productprice.editText!!.text.toString().trim { it <= ' ' },
                                                 productdiscription.editText!!.text.toString().trim { it <=  ' ' },
                                                 url,
+                                                "",
+                                            productquantity.editText!!.text.toString().trim { it <= ' ' }
                                         )
                                         FirestoreClass().registerproduct(this@AddProductActivity,product)
                                     }

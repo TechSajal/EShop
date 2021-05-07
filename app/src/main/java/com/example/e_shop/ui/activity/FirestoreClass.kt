@@ -3,6 +3,7 @@ package com.example.e_shop.ui.activity
 import android.app.Activity
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.example.e_shop.Modul.CartItem
 import com.example.e_shop.Modul.Product
 import com.example.e_shop.Modul.User
 import com.example.e_shop.ui.fragments.DashboardFragment
@@ -104,6 +105,72 @@ class FirestoreClass {
                       fragment.successDashboardListFromFirestore(DASHBOARDlists)
                 }
     }
+
+    fun deleteproduct(fragment: ProductsFragment,productID:String){
+        mfirestore.collection("Products")
+                .document(productID)
+                .delete()
+                .addOnSuccessListener {
+                    fragment.productdeletesuccess()
+                }
+    }
+
+    fun getproductdetails(activity:Product_Details_Activity,productID: String){
+        mfirestore.collection("Products")
+            .document(productID)
+            .get()
+            .addOnSuccessListener { document ->
+                val product = document.toObject(Product::class.java)
+                if (product != null) {
+                    activity.productDetailSuccess(product)
+                }
+            }
+    }
+
+    fun addCartitems(activity:Product_Details_Activity,addToCartItem: CartItem){
+        mfirestore.collection("CartItem")
+            .document()
+            .set(addToCartItem, SetOptions.merge())
+            .addOnSuccessListener {
+                    activity.addtoCartSuccess()
+            }
+    }
+
+    fun ifItemExistInCart(activity: Product_Details_Activity,productID: String){
+        mfirestore.collection("CartItem")
+            .whereEqualTo("user_id",currentuserid)
+            .whereEqualTo("product_id",productID)
+            .get()
+            .addOnSuccessListener { document ->
+                 if (document.documents.size > 0){
+                     activity.productexistincart()
+                 }
+
+            }
+    }
+
+    fun getCartList(activity: Activity){
+        mfirestore.collection("CartItem")
+            .whereEqualTo("user_id",currentuserid)
+            .get()
+            .addOnSuccessListener { document ->
+                val list:ArrayList<CartItem> = ArrayList()
+
+                for (i in document.documents){
+                    val cartItem = i.toObject(CartItem::class.java)!!
+                    cartItem.id = i.id
+                    list.add(cartItem)
+                }
+
+                when(activity){
+                    is CartListActivity -> {
+                        activity.successCartItemList(list)
+                    }
+                }
+            }
+    }
+
+
 
 
 }

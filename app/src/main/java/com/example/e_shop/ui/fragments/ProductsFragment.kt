@@ -1,8 +1,10 @@
 package com.example.e_shop.ui.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_shop.Modul.Product
@@ -28,13 +30,40 @@ class ProductsFragment : Fragment() {
              tv_no_products_found.visibility = View.GONE
              rv_my_product_items.layoutManager = LinearLayoutManager(activity)
              rv_my_product_items.setHasFixedSize(true)
-             val adapterProducts = MyProductListAdapter(requireActivity(), productList)
+             val adapterProducts = MyProductListAdapter(requireActivity(), productList,this)
              rv_my_product_items.adapter = adapterProducts
          } else {
              rv_my_product_items.visibility = View.GONE
              tv_no_products_found.visibility = View.VISIBLE
          }
      }
+
+    fun deleteproduct(productID:String){
+           showalertdialog(productID)
+    }
+
+    fun productdeletesuccess(){
+        Toast.makeText(context,"Product Have Deleated",Toast.LENGTH_SHORT).show()
+          FirestoreClass().getProductsList(this)
+    }
+
+    fun showalertdialog(productID: String){
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle("Delete")
+        builder.setMessage("Are you sure you want to delete the product")
+        builder.setIcon(R.drawable.ic_baseline_warning_24)
+        builder.setPositiveButton("Yes"){ dialoginterface, _ ->
+             FirestoreClass().deleteproduct(this,productID)
+            dialoginterface.dismiss()
+
+        }
+        builder.setNegativeButton("No"){ dialoginterface, _ ->
+            dialoginterface.dismiss()
+        }
+        val alertDialog:AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
 
     override fun onResume() {
         super.onResume()

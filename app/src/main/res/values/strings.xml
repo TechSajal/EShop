@@ -10,4 +10,17 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_my_cart">MY CART</string>
+
+    <string name="no_cart_item_found">No item found in cart!</string>
+
+    <string name="lbl_subtotal">Subtotal</string>
+
+    <string name="lbl_shipping_charge">Shipping Charge</string>
+
+    <string name="lbl_total_amount">Total Amount</string>
+
+    <string name="btn_lbl_checkout">Checkout</string>
+
+    <string name="action_cart">My Cart</string>
 </resources>

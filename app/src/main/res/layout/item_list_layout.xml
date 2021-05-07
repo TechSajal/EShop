@@ -45,9 +45,8 @@
             android:id="@+id/tv_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/montserrat_bold"
             android:textColor="#545353"
-            android:textFontWeight="600"
             android:textSize="18sp"
             tools:text="Sajal Kaushal" />
 
@@ -56,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:fontFamily="@font/montserrat"
             android:textColor="#545353"
             android:textSize="12sp"
             android:textStyle="bold"
